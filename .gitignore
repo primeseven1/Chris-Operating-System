@@ -1,0 +1,5 @@
+*.o
+./bin/kernel.bin
+./bin/bootloader.bin
+./lib/*.a
+.vscode/
