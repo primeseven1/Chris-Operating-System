@@ -8,7 +8,7 @@ user_code_location equ 0x8000 + 0x4000
 
 section .bss
 stack_bottom:
-    resb 16384 ; 16 KB of stack space, for holding things like the TSS, GDT, IDT
+    resb 16384 ; 16 KB of stack space, for initializing
 stack_top:
 
 tss_kernel_stack_bottom:
