@@ -8,11 +8,8 @@ void kmain()
 {
     initHAL();
     sti();
+    disableCursor();
 
     kprintf("Switching to user mode...");
-
-    // Before going into user mode, clear the screen and bring the cursor (not the vga cursor) down a line
     clearScreen(VGA_BLACK);
-    printString("Work in progress\n", VGA_RED, VGA_DARK_GREY);
-    disableCursor();
 }

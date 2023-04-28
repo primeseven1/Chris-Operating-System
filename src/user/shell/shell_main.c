@@ -3,7 +3,9 @@
 void shell_main()
 {
     cursorEnable(15, 15);
-    moveCursor(1, 1);
+    moveCursor(1, 2);
+
+    printf("Work in progress\n\n");
 
     // The X of the cursor location
     // TODO: Improve this later
@@ -27,7 +29,7 @@ void shell_main()
 
             printf("\b \b");
             charsOnLine--;
-            moveCursor(--cursorLocation, 1);
+            moveCursor(--cursorLocation, 2);
             continue;
         }
 
@@ -35,7 +37,7 @@ void shell_main()
             continue;
 
         printf("%c", character);
-        moveCursor(++cursorLocation, 1);
+        moveCursor(++cursorLocation, 2);
         charsOnLine++;
     }
 }

@@ -4,6 +4,19 @@
 #define VGA_CTRL_PORT 0x3D4
 #define VGA_DATA_PORT 0x3D5
 
+static struct
+{
+	uint8_t cursorStart;
+	uint8_t cursorEnd;
+	uint8_t positonX;
+	uint8_t positionY;
+} cursorAttributes = {
+	.cursorStart = 0,
+	.cursorEnd = 0,
+	.positonX = 0,
+	.positionY = 0
+};
+
 void enableCursor(uint8_t cursorStart, uint8_t cursorEnd)
 {
 	// The max number is 15 for both
@@ -18,6 +31,9 @@ void enableCursor(uint8_t cursorStart, uint8_t cursorEnd)
  
 	outb(VGA_CTRL_PORT, 0x0B);
 	outb(VGA_DATA_PORT, (inb(VGA_DATA_PORT) & 0xE0) | cursorEnd);
+
+	cursorAttributes.cursorStart = cursorStart;
+	cursorAttributes.cursorEnd = cursorEnd;
 }
 
 void disableCursor()
@@ -28,6 +44,12 @@ void disableCursor()
 
 void updateCursor(uint8_t x, uint8_t y)
 {
+	if (x > V_MODE_WIDTH - 1)
+		x = 79;
+	
+	if (y > V_MODE_HEIGHT - 1)
+		y = 24;
+
 	uint16_t pos = y * V_MODE_WIDTH + x;
 
 	if (pos > V_MODE_WIDTH * V_MODE_HEIGHT - 1)
@@ -37,4 +59,7 @@ void updateCursor(uint8_t x, uint8_t y)
 	outb(VGA_DATA_PORT, (pos & 0xFF));
 	outb(VGA_CTRL_PORT, 0x0E);
 	outb(VGA_DATA_PORT, ((pos >> 8) & 0xFF));
+
+	cursorAttributes.positonX = x;
+	cursorAttributes.positionY = y;
 }

@@ -4,14 +4,14 @@
 
 char getKeyChar()
 {
-    try_again:
+    invalid_key_char:
     while (!(inb(KEYBOARD_STATUS_PORT) & KEY_BUFFER_FULL));
 
     uint8_t key = inb(KEYBOARD_DATA_PORT);
     key = convertScancode(key);
 
     if (!isPrintable(key))
-        goto try_again;
+        goto invalid_key_char;
 
     return key;
 }
