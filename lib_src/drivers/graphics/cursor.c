@@ -44,16 +44,14 @@ void disableCursor()
 
 void updateCursor(uint8_t x, uint8_t y)
 {
+	// The cursor position x and y start at 0 which is why it's subtracted by 1
 	if (x > V_MODE_WIDTH - 1)
-		x = 79;
+		x = V_MODE_WIDTH - 1;
 	
 	if (y > V_MODE_HEIGHT - 1)
-		y = 24;
+		y = V_MODE_HEIGHT - 1;
 
 	uint16_t pos = y * V_MODE_WIDTH + x;
-
-	if (pos > V_MODE_WIDTH * V_MODE_HEIGHT - 1)
-		pos = V_MODE_WIDTH * V_MODE_HEIGHT - 1;
  
 	outb(VGA_CTRL_PORT, 0x0F);
 	outb(VGA_DATA_PORT, (pos & 0xFF));
