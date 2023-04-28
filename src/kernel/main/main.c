@@ -2,7 +2,6 @@
 #include <drivers/graphics/graphics.h>
 #include <kernel/kernel_modules/io/kprintf.h>
 #include <kernel/kernel.h>
-#include <kernel/kernel_modules/io/input.h>
 #include "../hal/hal.h"
 
 void kmain()

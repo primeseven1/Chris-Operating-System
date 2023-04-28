@@ -45,7 +45,11 @@ void initIDT()
 {
     kprintf("\nInitializing IDT...\nSetting interrupt gates...");
     for (int i = 0; i < sizeof(idt) / sizeof(idt[0]); i++)
-        IDTSetGate(i, (uint32_t)noHandle, GDT_ENTRY_KERNEL_CODE, IDT_FLAG_INTERRUPT | GDT_ACCESS_RING0);
+        IDTSetGate(
+            i, 
+            (uint32_t)noHandle, 
+            GDT_ENTRY_KERNEL_CODE, 
+            IDT_FLAG_INTERRUPT | GDT_ACCESS_RING0 );
 
     IDTSetExceptionGates();
     IDTSetGate(

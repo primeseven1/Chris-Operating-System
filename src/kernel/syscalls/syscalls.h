@@ -1,11 +1,7 @@
 #pragma once
 
-#include <kernel/kernel.h>
-#include <drivers/graphics/graphics.h>
-#include <drivers/graphics/cursor.h>
-#include <drivers/graphics/graphics.h>
-#include <kernel/kernel_modules/io/kprintf.h>
 #include <stdint.h>
+#include "../interrupts/callFrames.h"
 
 enum syscallTable
 {
