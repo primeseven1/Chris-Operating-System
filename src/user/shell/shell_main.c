@@ -4,6 +4,7 @@
 
 void shell_main()
 {
+    // Make the cursor thin and set the cursor to where it will be after going into the shell
     cursorEnable(15, 15);
     moveCursor(1, 2);
 
