@@ -1,8 +1,8 @@
 #pragma once
 
-#ifdef RING3
+#ifndef RING0
 #warning "Only ring 0 should access video_buffer.h"
-#endif // RING3
+#endif // RING0
 
 #ifdef RING0
 
