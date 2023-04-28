@@ -101,7 +101,7 @@ void clearScreen(vgaColor_t color)
     // Set the location at the beginning so the screen can be cleared
     *cursorLocationPtr = VIDEO_TEXT_MEMORY;
 
-    uint8_t attributeByte = (color << 4) | (color & 0x0F);
+    uint8_t attributeByte = (color << 4) | (VGA_WHITE & 0x0F);
 
     // Clears the screen by setting the entire video buffer to spaces
     for (int i = 0; i < V_MODE_WIDTH * V_MODE_HEIGHT; i++, (*cursorLocationPtr)++)
