@@ -14,7 +14,7 @@ void __attribute__((TRAP)) gpf(const struct exceptionCallFrame* frame)
     // Doing this for now
     struct panicInfo info = {
         .errorCode = CPU_EXCEPTION,
-        .info = "A general protection fault exception occurred",
+        .info = "A general protection fault exception occurred, the program will be terminated",
         .caller = __func__,
         .memoryAddress = (void*)frame->eip
     };

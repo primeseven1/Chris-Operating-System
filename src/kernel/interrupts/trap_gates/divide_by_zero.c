@@ -14,7 +14,7 @@ void __attribute__((TRAP)) divideByZero(const struct exceptionCallFrame* frame)
     // Doing this for now, preferably want to terminate the program that had the fault
     struct panicInfo info = {
         .errorCode = CPU_EXCEPTION,
-        .info = "A divide by zero exception occurred",
+        .info = "A divide by zero exception occurred, the program will be terminated",
         .caller = __func__,
         .memoryAddress = (void*)frame->eip
     };

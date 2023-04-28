@@ -5,7 +5,7 @@ void kernelModeTrap(const char* caller, void* memoryAddress)
 {
     struct panicInfo info = {
         .errorCode = UNEXPECTED_KERNEL_MODE_TRAP,
-        .info = "There was an unexpected kernel mode trap, an interrupt occurred at kernel level",
+        .info = "There was a kernel mode trap, restart the system",
         .caller = caller,
         .memoryAddress = memoryAddress
     };

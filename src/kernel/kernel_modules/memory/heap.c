@@ -1,5 +1,6 @@
 #include <kernel/kernel_modules/io/panic.h>
 #include <libc/string.h>
+#include <stdint.h>
 #include <stdbool.h>
 #include "./heap.h"
 
@@ -114,7 +115,7 @@ void kfree(void* ptr)
 
     // This is preventing marking memory as free at a different location than the heap
     // Since it could cause problems in the future when they try to free memory that isn't in the memory pool, the kernel will panic
-    if ((int)ptr < (int)heap.heapStart || (int)ptr > (int)heap.heapEnd)
+    if ((uint32_t)ptr < (uint32_t)heap.heapStart || (uint32_t)ptr > (uint32_t)heap.heapEnd)
     {
     panic:
         struct panicInfo panicInfo = { 
@@ -151,7 +152,7 @@ void kfree(void* ptr)
     {
         /* I'm using a goto statement here since the error information would be the exact same anyway
            when the kernel panics, it has an infinite loop anyway to stop the kernel */
-        if ((int)(freeBlocks[i + j].ptr) > (int)heap.heapEnd)
+        if ((uint32_t)(freeBlocks[i + j].ptr) > (uint32_t)heap.heapEnd)
             goto panic;
 
         freeBlocks[i + j].free = true;
