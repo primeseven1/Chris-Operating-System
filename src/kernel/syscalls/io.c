@@ -40,6 +40,7 @@ void sysOut(const struct syscallFrame* frame)
         
         default:
             badSyscall(__func__);
+            break;
     }
 }
 
@@ -57,6 +58,7 @@ int32_t sysIn(const struct syscallFrame* frame)
 
         default:
             badSyscall(__func__);
+            break;
     }
 
     return 0;

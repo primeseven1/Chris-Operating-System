@@ -5,9 +5,6 @@
 
 anyType_t __attribute__((ASM_LINKAGE)) check_syscall(const struct syscallFrame frame)
 {
-    if (frame.eax < 1 || frame.eax > NUM_OF_SYSCALLS)
-        badSyscall(__func__);
-
     // eax will hold return values, since it's an anytype return type (anytype is just a typedef for void)
     switch (frame.eax)
     {
@@ -31,6 +28,10 @@ anyType_t __attribute__((ASM_LINKAGE)) check_syscall(const struct syscallFrame f
 
         case SYS_FREE:
             sysFree(&frame);
+            break;
+
+        default:
+            badSyscall(__func__);
             break;
     }
 }

@@ -52,6 +52,8 @@ void initIDT()
             IDT_FLAG_INTERRUPT | GDT_ACCESS_RING0 );
 
     IDTSetExceptionGates();
+
+    // Have to make sure that the syscall gate can be used by ring 3, as not doing so will cause a GPF
     IDTSetGate(
         IDT_SYSCALL, 
         (uint32_t)syscall_handle, 
