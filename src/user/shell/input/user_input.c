@@ -19,6 +19,7 @@ const char* userInput()
 
     if (cursorLocationY > 24)
     {
+        // Clear the screen if the text is going to go off the screen
         clrscr(VGA_BLACK);
         cursorLocationY = 1;
         moveCursor(cursorLocationX, cursorLocationY);
