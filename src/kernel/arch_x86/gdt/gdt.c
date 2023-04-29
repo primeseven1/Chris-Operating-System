@@ -13,7 +13,7 @@ static volatile struct
     uint8_t baseHigh;
 } __attribute__((packed)) gdt[6];
 
-void GDTSetEntry(segment_t segment, uint32_t limit, uint32_t base, uint8_t accessByte, uint8_t granularity)
+void GDTSetEntry(segment_t segment, uint16_t limit, uint32_t base, uint8_t accessByte, uint8_t granularity)
 {
     // Divided by the size of a GDT entry to get the actual index in the array
 
