@@ -1,16 +1,19 @@
 #include <kernel/kernel_modules/io/ports.h>
 #include <drivers/graphics/graphics.h>
+#include <stdbool.h>
 
 #define VGA_CTRL_PORT 0x3D4
 #define VGA_DATA_PORT 0x3D5
 
 static struct
 {
+	bool enabled;
 	uint8_t cursorStart;
 	uint8_t cursorEnd;
 	uint8_t positonX;
 	uint8_t positionY;
 } cursorAttributes = {
+	.enabled = true,
 	.cursorStart = 0,
 	.cursorEnd = 0,
 	.positonX = 0,
@@ -34,12 +37,16 @@ void enableCursor(uint8_t cursorStart, uint8_t cursorEnd)
 
 	cursorAttributes.cursorStart = cursorStart;
 	cursorAttributes.cursorEnd = cursorEnd;
+
+	cursorAttributes.enabled = true;
 }
 
 void disableCursor()
 {
     outb(VGA_CTRL_PORT, 0x0A);
 	outb(VGA_DATA_PORT, 0x20);
+
+	cursorAttributes.enabled = false;
 }
 
 void updateCursor(uint8_t x, uint8_t y)
