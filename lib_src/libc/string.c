@@ -29,6 +29,28 @@ char* strrev(char* string)
     return string;
 }
 
+int strcmp(const char* string1, const char* string2) 
+{
+    // If these point to the same memory location, null or not, they have to be equal
+    if (!string1 || !string2)
+        return STRCMP_NULL_POINTER_ERROR;
+
+    // If the pointers are the same, then they have to be the same
+    if (string1 == string2)
+        return 0;
+
+    while (*string1 != '\0' && *string2 != '\0') 
+    {
+        if (*string1 != *string2)
+            return *string1 - *string2;
+
+        string1++;
+        string2++;
+    }
+
+    return *string1 - *string2;
+}
+
 void* memset(void* destination, int value, size_t numOfBytes)
 {
     if (!destination || !numOfBytes) 

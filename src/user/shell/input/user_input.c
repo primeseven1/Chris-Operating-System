@@ -32,36 +32,39 @@ const char* userInput()
     {
         char character = getChar();
 
-        // Handle tabs later
-        if (character == '\t')
-            continue;
-
-        if (character == '\n')
+        switch (character)
         {
-            input[charsOnLine - 1] = '\0';
-            cursorLocationY += 3;
-            moveCursor(1, cursorLocationY);
-            return input;
-        }
-
-        else if (character == '\b')
-        {
-            if (charsOnLine < 2)
+            case '\t':
                 continue;
+                break;
+            
+            case '\n':
+                input[charsOnLine - 1] = '\0';
+                cursorLocationY += 3;
+                moveCursor(1, cursorLocationY);
+                return input;
+                break;
+            
+            case '\b':
+                if (charsOnLine < 2)
+                    continue;
 
-            printf("\b \b");
-            input[charsOnLine - 1] = ' ';
-            charsOnLine--;
-            moveCursor(--cursorLocationX, cursorLocationY);
-            continue;
+                printf("\b \b");
+                input[charsOnLine - 1] = ' ';
+                charsOnLine--;
+                moveCursor(--cursorLocationX, cursorLocationY);
+                continue;
+                break;
+            
+            default:
+                if (cursorLocationX > 78)
+                    continue;
+
+                printf("%c", character);
+                moveCursor(++cursorLocationX, cursorLocationY);
+                input[charsOnLine - 1] = character;
+                charsOnLine++;
+                break;
         }
-
-        if (cursorLocationX > 78)
-            continue;
-
-        printf("%c", character);
-        moveCursor(++cursorLocationX, cursorLocationY);
-        input[charsOnLine - 1] = character;
-        charsOnLine++;
     }
 }

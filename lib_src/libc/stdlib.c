@@ -118,6 +118,28 @@ char* ftoa(float value, char* destination, unsigned int precision)
     return destination;
 }
 
+int atoi(const char* string)
+{
+    if (!string)
+        return 0;
+
+    bool negative = string[0] == '-' ? true : false;
+    int result = 0;
+
+    // Starts at 1 if the number is negative
+    int i = (int)negative;
+    while (string[i] != '\0')
+    {
+        if (string[i] < '0' || string[i] > '9')
+            return 0;
+
+        result = result * 10 + string[i] - '0';
+        i++;
+    }
+
+    return negative ? result * -1 : result;
+}
+
 void* malloc(size_t blockSize)
 {
     if (!blockSize)
