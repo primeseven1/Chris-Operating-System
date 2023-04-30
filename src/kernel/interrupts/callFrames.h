@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdint.h>
+#include <stdarg.h>
 
 struct exceptionCallFrame 
 {
@@ -14,6 +15,10 @@ struct syscallFrame
 {
     uint32_t eax;
     uint32_t ebx;
-    uint32_t ecx;
+    union
+    {
+        uint32_t value;
+        va_list argList;
+    } ecx;
     uint32_t edx;
 } __attribute__((packed));

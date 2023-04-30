@@ -18,7 +18,7 @@ void sysOut(const struct syscallFrame* frame)
         case PRINTF:
             /* ebx: format 
                ecx: the arg list */
-            vkprintf((const char*)frame->ebx, frame->ecx);
+            vkprintf((const char*)frame->ebx, frame->ecx.argList);
             break;
         
         case CURSOR_DISABLE:
@@ -29,13 +29,13 @@ void sysOut(const struct syscallFrame* frame)
             // Control the thickness i suppose
             /* ebx: cursorStart
                ecx: cursorEnd */
-            enableCursor((uint8_t)frame->ebx, (uint8_t)frame->ecx);
+            enableCursor((uint8_t)frame->ebx, (uint8_t)frame->ecx.value);
             break;
 
         case CURSOR_UPDATE:
             /* ebx: x 
                ecx: y */
-            updateCursor((uint8_t)frame->ebx, (uint8_t)frame->ecx);
+            updateCursor((uint8_t)frame->ebx, (uint8_t)frame->ecx.value);
             break;
         
         default:
