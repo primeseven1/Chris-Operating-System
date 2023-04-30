@@ -2,7 +2,7 @@
 
 #include <stddef.h>
 
-// I'm just using this number since it's very unlikely this will be returned by a valid compare
+// I'm just using this number since it's very unlikely this will be returned by a valid comparison
 #define STRCMP_NULL_POINTER_ERROR 654321
 
 size_t strlen(const char* string);

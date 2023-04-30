@@ -16,4 +16,6 @@ double ceil(double value)
     return floor(value + 1);
 }
 
-double abs(double value) { return value < 0 ? value * -1 : value; }
+int abs(int value) { return value < 0 ? value * -1 : value; }
+
+double fabs(double value) { return value < 0 ? value * -1 : value; }

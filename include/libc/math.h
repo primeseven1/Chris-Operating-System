@@ -2,4 +2,5 @@
 
 double floor(double value);
 double ceil(double value);
-double abs(double value);
+int abs(int value);
+double fabs(double value);
