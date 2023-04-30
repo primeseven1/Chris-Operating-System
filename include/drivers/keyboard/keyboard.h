@@ -161,7 +161,7 @@ enum keyPortStatus
     KEY_RELEASED = 0x80
 };
 
-uint8_t convertScancode(uint8_t scancode); 
+uint8_t convertScancode(uint8_t scancode, bool shifted);
 bool isPrintable(uint8_t character);
 
 #endif // RING0

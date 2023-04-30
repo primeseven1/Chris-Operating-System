@@ -10,12 +10,22 @@ static const char keyboardMap[128] = {
     0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
 };
 
-uint8_t convertScancode(uint8_t scancode) 
+static const char shiftedKeyboardMap[128] = {
+    0, 0, '!', '@', '#', '$', '%', '^', '&', '*', '(', ')', '_', '+', '\b', '\t',
+    'Q', 'W', 'E', 'R', 'T', 'Y', 'U', 'I', 'O', 'P', '{', '}', '\n', 0, 'A', 'S',
+    'D', 'F', 'G', 'H', 'J', 'K', 'L', ':', '"', '~', 0, '|', 'Z', 'X', 'C', 'V',
+    'B', 'N', 'M', '<', '>', '?', 0, '*', 0, ' ', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+    0, '7', '8', '9', '-', '4', '5', '6', '+', '1', '2', '3', '0', '.', 0, 0, 0, 0, 0,
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+    0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
+};
+
+uint8_t convertScancode(uint8_t scancode, bool shifted) 
 {
     if (scancode > sizeof(keyboardMap) - 1)
         return 0;
 
-    return keyboardMap[scancode]; 
+    return shifted ? shiftedKeyboardMap[scancode] : keyboardMap[scancode]; 
 }
 
 bool isPrintable(uint8_t character)
