@@ -5,7 +5,7 @@ std::exception::exception(const char* exception) noexcept
 
 const char* std::exception::what() const noexcept { return "An exception occured"; }
 
-std::exception std::exception::operator=(const std::exception& c) noexcept
+std::exception& std::exception::operator=(const std::exception& c) noexcept
 {
     _m_exception = c._m_exception; 
     return *this; 
