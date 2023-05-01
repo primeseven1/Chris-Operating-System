@@ -3,6 +3,7 @@
 #include <stdint.h>
 #include <stdarg.h>
 
+// This frame is automatically pushed onto the stack by the CPU
 struct exceptionCallFrame 
 {
     uint32_t eip;
@@ -11,6 +12,7 @@ struct exceptionCallFrame
     uint32_t errorCode;
 } __attribute__((packed));
 
+// This frame gets pushed onto the stack by the syscall handler in ./trap_gates/syscall_handle.asm
 struct syscallFrame
 {
     uint32_t eax;

@@ -37,4 +37,4 @@ void clearScreen(vgaColor_t color);
 uint8_t getCharactersOnLine();
 uint8_t getLineNumber();
 
-#endif
+#endif // RING0

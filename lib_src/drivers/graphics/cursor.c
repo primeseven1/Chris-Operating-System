@@ -1,6 +1,6 @@
 #include <kernel/kernel_modules/io/ports.h>
 #include <drivers/graphics/graphics.h>
-#include <stdbool.h>
+#include <drivers/graphics/cursor.h>
 
 #define VGA_CTRL_PORT 0x3D4
 #define VGA_DATA_PORT 0x3D5
@@ -8,15 +8,11 @@
 static struct
 {
 	bool enabled;
-	uint8_t cursorStart;
-	uint8_t cursorEnd;
-	uint8_t positonX;
+	uint8_t positionX;
 	uint8_t positionY;
 } cursorAttributes = {
 	.enabled = true,
-	.cursorStart = 0,
-	.cursorEnd = 0,
-	.positonX = 0,
+	.positionX = 0,
 	.positionY = 0
 };
 
@@ -34,9 +30,6 @@ void enableCursor(uint8_t cursorStart, uint8_t cursorEnd)
  
 	outb(VGA_CTRL_PORT, 0x0B);
 	outb(VGA_DATA_PORT, (inb(VGA_DATA_PORT) & 0xE0) | cursorEnd);
-
-	cursorAttributes.cursorStart = cursorStart;
-	cursorAttributes.cursorEnd = cursorEnd;
 
 	cursorAttributes.enabled = true;
 }
@@ -65,6 +58,12 @@ void updateCursor(uint8_t x, uint8_t y)
 	outb(VGA_CTRL_PORT, 0x0E);
 	outb(VGA_DATA_PORT, ((pos >> 8) & 0xFF));
 
-	cursorAttributes.positonX = x;
+	cursorAttributes.positionX = x;
 	cursorAttributes.positionY = y;
 }
+
+bool getCursorStatusEnabled() { return cursorAttributes.enabled; }
+
+uint8_t getPositionX() { return cursorAttributes.positionX; }
+
+uint8_t getPositionY() { return cursorAttributes.positionY; }

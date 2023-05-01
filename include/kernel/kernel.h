@@ -1,5 +1,11 @@
 #pragma once
 
+#ifndef RING0
+#warning "Only ring 0 needs kernel.h"
+#endif
+
+#ifdef RING0
+
 #include <stddef.h>
 
 #define ASM_LINKAGE cdecl
@@ -11,3 +17,5 @@ typedef void anyType_t;
 
 static inline void __attribute__((always_inline)) cli() { asm volatile("cli"); }
 static inline void __attribute__((always_inline)) sti() { asm volatile("sti"); }
+
+#endif // RING0

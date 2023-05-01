@@ -1,5 +1,11 @@
 #pragma once
 
+#ifndef RING0
+#warning "Only ring 0 needs panic.h"
+#endif // RING0
+
+#ifdef RING0
+
 enum errorCodes
 {
     CPU_EXCEPTION,
@@ -17,3 +23,5 @@ struct panicInfo
 };
 
 void kpanic(const struct panicInfo* info);
+
+#endif // RING0
