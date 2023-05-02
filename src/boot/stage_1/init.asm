@@ -10,7 +10,7 @@ global _start
 extern load_kernel ; Defined in ../stage_2/load_kernel.asm
 
 _start:
-    mov [disk], dl ; Make sure to save this value
+    mov [disk], dl ; Disk number
     call load_kernel
 
 jmp $

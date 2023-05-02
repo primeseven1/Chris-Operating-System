@@ -28,3 +28,5 @@ syscall_handle:
     pop ebp
     sti
     iret
+
+jmp $

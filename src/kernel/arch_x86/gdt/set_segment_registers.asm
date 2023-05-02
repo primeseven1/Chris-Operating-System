@@ -18,3 +18,5 @@ set_kernel_segment_registers:
 
     reload_code_segment:
         ret
+
+jmp $
