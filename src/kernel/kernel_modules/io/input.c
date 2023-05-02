@@ -18,16 +18,18 @@ char getKeyChar()
 {
     static bool shifted = false;
 
-    invalid_key_char:
-    while (!(inb(KEYBOARD_STATUS_PORT) & KEY_BUFFER_FULL));
+    while (1)
+    {
+        while (!(inb(KEYBOARD_STATUS_PORT) & KEY_BUFFER_FULL));
 
-    uint8_t key = inb(KEYBOARD_DATA_PORT);
-    shiftPressed(key, &shifted);
+        uint8_t key = inb(KEYBOARD_DATA_PORT);
+        shiftPressed(key, &shifted);
 
-    key = convertScancode(key, shifted);
+        key = convertScancode(key, shifted);
 
-    if (!isPrintable(key))
-        goto invalid_key_char;
+        if (!isPrintable(key))
+            continue;
 
-    return key;
+        return key;
+    }
 }

@@ -55,8 +55,8 @@ void* kmalloc(size_t blockSize)
         return NULL;
 
     // Making sure the requested block size isn't too big, or if the block size is zero
-    if (!blockSize || blockSize > heap.heapSize
-        || heap.currentReserved + blockSize > heap.heapSize)
+    if (blockSize == 0 || blockSize > heap.heapSize || 
+        heap.currentReserved + blockSize > heap.heapSize)
         return NULL;
     
     for (size_t i = 0; i < heap.heapSize; i++)
@@ -151,7 +151,7 @@ void kfree(void* ptr)
     for (int j = 0; j < freeBlocks[i].blockSize; j++)
     {
         /* I'm using a goto statement here since the error information would be the exact same anyway
-           when the kernel panics, it has an infinite loop anyway to stop the kernel */
+           since it tried to free memory outside of the heap, and that also means it should be handled the same */
         if ((uint32_t)(freeBlocks[i + j].ptr) > (uint32_t)heap.heapEnd)
             goto memory_outside_heap;
 
