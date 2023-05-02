@@ -8,7 +8,13 @@ void shell_main()
     cursorEnable(15, 15);
     moveCursor(1, 2);
 
+    changeFgColor(VGA_RED);
+    changeBgColor(VGA_DARK_GREY);
+    
     printf("Work in progress\n");
+
+    changeFgColor(VGA_WHITE);
+    changeBgColor(VGA_BLACK);
 
     for (;;)
     {

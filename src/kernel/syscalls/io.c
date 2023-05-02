@@ -21,6 +21,14 @@ void sysOut(const struct syscallFrame* frame)
             vkprintf((const char*)frame->ebx, frame->ecx.argList);
             break;
         
+        case CHANGE_FG_COLOR:
+            setFgColor((vgaColor_t)frame->ebx);
+            break;
+        
+        case CHANGE_BG_COLOR:
+            setBgColor((vgaColor_t)frame->ebx);
+            break;
+
         case CURSOR_DISABLE:
             disableCursor();
             break;

@@ -1,8 +1,14 @@
 #include <kernel/kernel_modules/io/kprintf.h>
-#include <drivers/graphics/graphics.h>
 #include <libc/string.h>
 #include <libc/stdlib.h>
 #include <stdarg.h>
+
+static vgaColor_t fgColor = VGA_WHITE;
+static vgaColor_t bgColor = VGA_BLACK;
+
+void setFgColor(vgaColor_t color) { fgColor = color; }
+
+void setBgColor(vgaColor_t color) { bgColor = color; }
 
 void vkprintf(const char* format, va_list args)
 {
@@ -14,14 +20,14 @@ void vkprintf(const char* format, va_list args)
     {
         if (format[i] != '%')
         {
-            printChar(format[i], VGA_WHITE, VGA_BLACK);
+            printChar(format[i], fgColor, bgColor);
             continue;
         }
 
         switch (format[++i])
         {
             case 'c':
-                printChar((char)va_arg(args, int), VGA_WHITE, VGA_BLACK);
+                printChar((char)va_arg(args, int), fgColor, bgColor);
                 break;
             
             case 's':
@@ -30,7 +36,7 @@ void vkprintf(const char* format, va_list args)
                 if (!ptr)
                     break;
 
-                printString(ptr, VGA_WHITE, VGA_BLACK);
+                printString(ptr, fgColor, bgColor);
                 break;
             }
             
@@ -42,7 +48,7 @@ void vkprintf(const char* format, va_list args)
                 char buffer[33];
                 memset(buffer, 0, sizeof(buffer));
                 itoa(va_arg(args, int), buffer, 10);
-                printString(buffer, VGA_WHITE, VGA_BLACK);
+                printString(buffer, fgColor, bgColor);
                 break;
             }
             
@@ -51,7 +57,7 @@ void vkprintf(const char* format, va_list args)
                 char buffer[64];
                 memset(buffer, 0, sizeof(buffer));
                 ftoa((float)va_arg(args, double), buffer, 5);
-                printString(buffer, VGA_WHITE, VGA_BLACK);
+                printString(buffer, fgColor, bgColor);
                 break;
             }
 
@@ -62,13 +68,13 @@ void vkprintf(const char* format, va_list args)
 
                 // Just converting the pointer to base 16
                 itoa((int)va_arg(args, void*), buffer, 16);
-                printString("0x", VGA_WHITE, VGA_BLACK);
-                printString(buffer, VGA_WHITE, VGA_BLACK);
+                printString("0x", fgColor, bgColor);
+                printString(buffer, fgColor, bgColor);
                 break;
             }
             
             default:
-                printChar(format[i], VGA_WHITE, VGA_BLACK);
+                printChar(format[i], fgColor, bgColor);
                 break;
         }
     }

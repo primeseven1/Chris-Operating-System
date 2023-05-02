@@ -6,8 +6,11 @@
 
 #ifdef RING0
 
+#include <drivers/graphics/graphics.h>
 #include <stdarg.h>
 
+void setFgColor(vgaColor_t color);
+void setBgColor(vgaColor_t color);
 void vkprintf(const char* format, va_list args);
 void kprintf(const char* format, ...);
 

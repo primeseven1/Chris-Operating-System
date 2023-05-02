@@ -7,7 +7,7 @@ const char* userInput()
     // The X of the cursor location
     // TODO: Improve this later
     
-    // Max line number (79) + null terminator
+    // Max amount of characters on the line (79 in this case) + null terminator
     char* input = (char*)malloc(V_MODE_WIDTH);
 
     if (!input)
@@ -25,6 +25,7 @@ const char* userInput()
         moveCursor(cursorLocationX, cursorLocationY);
     }
 
+    // This is the main reason the input is allocated as 79 + 1 rather than 80 + 1
     printf("\n>");
     int charsOnLine = 1;
 

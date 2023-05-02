@@ -16,6 +16,8 @@ enum edxSyscallValues
     // SYS_OUT
     CLEAR_SCREEN = 1,
     PRINTF,
+    CHANGE_FG_COLOR,
+    CHANGE_BG_COLOR,
     CURSOR_DISABLE,
     CURSOR_ENABLE,
     CURSOR_UPDATE,
