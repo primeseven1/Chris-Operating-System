@@ -6,12 +6,12 @@ global code_segment
 global data_segment
 global gdt_descriptor
 
-gdt_start: ; Determining the size with start/end lables
-    gdt_null: ; NULL segment
+gdt_start:
+    gdt_null:
         dd 0x0000
         dd 0x0000
 
-    gdt_code: ; Code segment
+    gdt_code:
         dw 0xffff
         dw 0x0000
         db 0x0000
@@ -19,7 +19,7 @@ gdt_start: ; Determining the size with start/end lables
         db 0b11001111
         db 0x0000
 
-    gdt_data: ; Data segment
+    gdt_data:
         dw 0xffff
         dw 0x0000
         db 0x0000

@@ -31,7 +31,7 @@ set_video_mode:
     int 0x10
 
 start_protected_mode:
-    cli ; Disable interrupts before loading the GDT
+    cli
     lgdt [gdt_descriptor]
     mov eax, cr0
     or eax, 1 ; Flip the protected mode bit
