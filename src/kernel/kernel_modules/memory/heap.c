@@ -24,7 +24,7 @@ struct free
 };
 
 // This is where the information about pointers in the heap are going to be located, storing this on the stack would take up the entire stack
-static struct free* freeBlocks = (struct free*)0x1000000;
+static struct free* const freeBlocks = (struct free*)0x1000000;
 
 static bool init = false;
 void initHeap()
@@ -117,7 +117,7 @@ void kfree(void* ptr)
     // Since it could cause problems in the future when they try to free memory that isn't in the memory pool, the kernel will panic
     if ((uint32_t)ptr < (uint32_t)heap.heapStart || (uint32_t)ptr > (uint32_t)heap.heapEnd)
     {
-    panic:
+    memory_outside_heap:
         struct panicInfo panicInfo = { 
             .errorCode = KERNEL_HEAP_ERROR, 
             .memoryAddress = ptr, 
@@ -153,7 +153,7 @@ void kfree(void* ptr)
         /* I'm using a goto statement here since the error information would be the exact same anyway
            when the kernel panics, it has an infinite loop anyway to stop the kernel */
         if ((uint32_t)(freeBlocks[i + j].ptr) > (uint32_t)heap.heapEnd)
-            goto panic;
+            goto memory_outside_heap;
 
         freeBlocks[i + j].free = true;
     }
@@ -161,4 +161,20 @@ void kfree(void* ptr)
     // Subtrating how much memory is reserved, and resetting the block size to zero
     heap.currentReserved -= freeBlocks[i].blockSize;
     freeBlocks[i].blockSize = 0;
+}
+
+void kfreeAll()
+{
+    if (heap.currentReserved == 0)
+        return;
+
+    for (size_t i = 0; i < heap.heapSize; i++)
+    {
+        if (freeBlocks[i].free)
+            continue;
+        
+        freeBlocks[i].free = true;
+    }
+
+    heap.currentReserved = 0;
 }
