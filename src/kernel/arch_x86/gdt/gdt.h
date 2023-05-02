@@ -40,5 +40,5 @@ enum granularityFlags
     GDT_FLAG_GRANULARITY_4K = 0x80
 };
 
-void GDTSetEntry(segment_t segment, uint16_t limit, uint32_t base, uint8_t accessByte, uint8_t granularity);
+void GDTSetEntry(segment_t segment, uint16_t limitLow, uint32_t base, uint8_t accessByte, uint8_t granularity);
 void initGDT();

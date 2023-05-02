@@ -5,7 +5,7 @@
 
 static volatile struct
 {
-    uint16_t limit;
+    uint16_t limitLow;
     uint16_t baseLow;
     uint8_t baseMiddle;
     uint8_t accessByte;
@@ -13,16 +13,16 @@ static volatile struct
     uint8_t baseHigh;
 } __attribute__((packed)) gdt[6];
 
-void GDTSetEntry(segment_t segment, uint16_t limit, uint32_t base, uint8_t accessByte, uint8_t granularity)
+void GDTSetEntry(segment_t segment, uint16_t limitLow, uint32_t base, uint8_t accessByte, uint8_t granularity)
 {
     // Divided by the size of a GDT entry to get the actual index in the array
 
-    /*  limit: Segment limit
+    /*  limitLow: Segment limit
         baseLow: lower 16 bits
         baseMiddle: Middle 8 bits
         accessByte: Contains things like privilage level, whether it's present, etc
         granularity:  Used to measure the segment limit */
-    gdt[segment / sizeof(gdt[0])].limit = limit;
+    gdt[segment / sizeof(gdt[0])].limitLow = limitLow;
     gdt[segment / sizeof(gdt[0])].baseLow = base & 0xFFFF;
     gdt[segment / sizeof(gdt[0])].baseMiddle = (base >> 16) & 0xFF;
     gdt[segment / sizeof(gdt[0])].accessByte = accessByte;
