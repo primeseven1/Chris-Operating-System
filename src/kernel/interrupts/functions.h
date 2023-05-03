@@ -12,4 +12,6 @@ void __attribute__((HW_INTERRUPT)) mce(const struct exceptionCallFrame* frame);
 
 void __attribute__((TRAP)) gpf(const struct exceptionCallFrame* frame);
 void __attribute__((TRAP)) divideByZero(const struct exceptionCallFrame* frame);
+void __attribute__((TRAP)) invalidOpcode(const struct exceptionCallFrame* frame);
+
 void __attribute__((TRAP, ASM_LINKAGE)) syscall_handle(const void* unusedFrame);

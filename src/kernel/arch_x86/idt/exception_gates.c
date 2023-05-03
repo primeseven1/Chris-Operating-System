@@ -21,4 +21,10 @@ void IDTSetExceptionGates()
         (uint32_t)mce,
         GDT_ENTRY_KERNEL_CODE,
         IDT_FLAG_INTERRUPT | GDT_ACCESS_RING0 );
+
+    IDTSetGate(
+        IDT_INVALID_OPCODE_EXCEPTION,
+        (uint32_t)invalidOpcode,
+        GDT_ENTRY_KERNEL_CODE,
+        IDT_FLAG_TRAP | GDT_ACCESS_RING0 );
 }
