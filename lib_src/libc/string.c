@@ -51,6 +51,40 @@ int strcmp(const char* string1, const char* string2)
     return *string1 - *string2;
 }
 
+char* strcpy(char* destination, const char* source)
+{
+    if (!destination || !source)
+        return NULL;
+
+    while (*source != '\0')
+    {
+        *destination = *source;
+        destination++;
+        source++;
+    }
+
+    *destination = '\0';
+    return destination;
+}
+
+char* strncpy(char* destination, const char* source, size_t numOfChars)
+{
+    if (!destination || !source || numOfChars == 0)
+        return NULL;
+
+    while (*source != '\0' && numOfChars != 0)
+    {
+        *destination = *source;
+        source++;
+        destination++;
+        numOfChars--;
+    }
+
+    *destination = '\0';
+
+    return destination;
+}
+
 void* memset(void* destination, int value, size_t numOfBytes)
 {
     if (!destination || !numOfBytes) 
