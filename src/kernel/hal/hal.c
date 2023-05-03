@@ -1,5 +1,5 @@
 #include <drivers/graphics/graphics.h>
-#include "../kernel_modules/memory/heap.h"
+#include <kernel/kernel_modules/memory/heap.h>
 #include <kernel/kernel_modules/io/kprintf.h>
 #include "../arch_x86/gdt/gdt.h"
 #include "../arch_x86/idt/idt.h"

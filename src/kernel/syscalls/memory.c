@@ -1,5 +1,5 @@
 #include "./syscalls.h"
-#include "../kernel_modules/memory/heap.h"
+#include <kernel/kernel_modules/memory/heap.h>
 
 void* sysMalloc(const struct syscallFrame* frame)
 {

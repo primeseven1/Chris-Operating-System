@@ -1,8 +1,8 @@
 #include <kernel/kernel_modules/io/panic.h>
+#include <kernel/kernel_modules/memory/heap.h>
 #include <libc/string.h>
 #include <stdint.h>
 #include <stdbool.h>
-#include "./heap.h"
 
 // currentReserved is used to prevent allocating memory outside of the heap memory space
 static struct
