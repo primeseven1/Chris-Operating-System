@@ -1,8 +1,5 @@
 #pragma once
 
-#include <stdint.h>
-#include "../interrupts/callFrames.h"
-
 enum syscallTable
 {
     SYS_OUT = 1,
@@ -28,6 +25,12 @@ enum edxSyscallValues
     // SYS_MALLOC and SYS_FREE do not use edx
 };
 
+// The stdlib.h and stdio.h will be including this file, which is why this gaurd is around here
+#ifdef RING0
+
+#include <stdint.h>
+#include "../interrupts/callFrames.h"
+
 #define NUM_OF_SYSCALLS 4
 
 void sysOut(const struct syscallFrame* frame);
@@ -36,3 +39,5 @@ void* sysMalloc(const struct syscallFrame* frame);
 void sysFree(const struct syscallFrame* frame);
 
 void badSyscall(const char* caller);
+
+#endif // RING0

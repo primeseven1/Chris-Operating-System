@@ -2,6 +2,7 @@
 #include <libc/string.h>
 #include <stdbool.h>
 #include <stddef.h>
+#include "../../src/kernel/syscalls/syscalls.h"
 
 char* itoa(int value, char* destination, unsigned int base) 
 {
@@ -147,10 +148,8 @@ void* malloc(size_t blockSize)
 
     void* ptr = NULL;
 
-    /* 0x03: The request memory system call
-       ebx: The block size */
-    asm volatile("mov $0x3, %eax");
-    asm volatile("mov %0, %%ebx" : : "m"(blockSize));
+    asm volatile("movl %0, %%eax" : : "i"(SYS_MALLOC));
+    asm volatile("movl %0, %%ebx" : : "m"(blockSize));
     asm volatile("int $0x80");
 
     // Storing the return value from the system call in the pointer variable
@@ -175,9 +174,7 @@ void free(void* ptr)
     if (!ptr)
         return;
 
-    /* 0x04: The system call for freeing memory 
-       ebx: The pointer to be freed */
-    asm volatile("mov $0x4, %eax");
-    asm volatile("mov %0, %%ebx" : : "m"(ptr));
+    asm volatile("movl %0, %%eax" : : "i"(SYS_FREE));
+    asm volatile("movl %0, %%ebx" : : "m"(ptr));
     asm volatile("int $0x80");
 }

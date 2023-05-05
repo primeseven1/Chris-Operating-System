@@ -4,7 +4,7 @@
 #include <kernel/kernel_modules/io/kprintf.h>
 #include <kernel/kernel_modules/io/input.h>
 #include "../interrupts/callFrames.h"
-#include "syscalls.h"
+#include "./syscalls.h"
 
 void sysOut(const struct syscallFrame* frame)
 {
