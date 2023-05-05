@@ -1,8 +1,8 @@
 #include <drivers/graphics/graphics.h>
 #include <kernel/kernel_modules/memory/heap.h>
 #include <kernel/kernel_modules/io/kprintf.h>
-#include "../arch_x86/gdt/gdt.h"
-#include "../arch_x86/idt/idt.h"
+#include "../descriptor_tables/gdt/gdt.h"
+#include "../descriptor_tables/idt/idt.h"
 #include "./hal.h"
 
 void initHAL()

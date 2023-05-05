@@ -1,6 +1,6 @@
 #include <kernel/kernel_modules/io/panic.h>
 #include <kernel/kernel.h>
-#include "../../arch_x86/gdt/gdt.h"
+#include "../../descriptor_tables/gdt/gdt.h"
 #include "../functions.h"
 
 void __attribute__((TRAP)) divideByZero(const struct exceptionCallFrame* frame)
