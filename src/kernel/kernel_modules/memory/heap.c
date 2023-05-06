@@ -87,7 +87,7 @@ void* kmalloc(size_t blockSize)
             for (size_t j = 0; j < blockSize; j++)
                 freeBlocks[i + j].free = false;
 
-            // Setting the block size for freeing, and adding how much is reserved
+            // Setting the block size for when it needs to be freed, and adding that value to how much is reserved
             freeBlocks[i].blockSize = blockSize;
             heap.currentReserved += blockSize;
             return freeBlocks[i].ptr;
@@ -113,20 +113,8 @@ void kfree(void* ptr)
     if (!init)
         return;
 
-    // This is preventing marking memory as free at a different location than the heap
-    // Since it could cause problems in the future when they try to free memory that isn't in the memory pool, the kernel will panic
     if ((uint32_t)ptr < (uint32_t)heap.heapStart || (uint32_t)ptr > (uint32_t)heap.heapEnd)
-    {
-    memory_outside_heap:
-        struct panicInfo panicInfo = { 
-            .errorCode = KERNEL_HEAP_ERROR, 
-            .memoryAddress = ptr, 
-            .info = "There was an attempt to free memory outside of the heap",
-            .caller = __func__ 
-        };
-
-        kpanic(&panicInfo);
-    }
+        return;
 
     size_t i = 0;
     for (; i < heap.heapSize; i++)
@@ -150,10 +138,17 @@ void kfree(void* ptr)
 
     for (int j = 0; j < freeBlocks[i].blockSize; j++)
     {
-        /* I'm using a goto statement here since the error information would be the exact same anyway
-           since it tried to free memory outside of the heap, and that also means it should be handled the same */
         if ((uint32_t)(freeBlocks[i + j].ptr) > (uint32_t)heap.heapEnd)
-            goto memory_outside_heap;
+        {
+            struct panicInfo panicInfo = { 
+                .errorCode = KERNEL_HEAP_ERROR, 
+                .memoryAddress = ptr, 
+                .info = "There was an attempt to free memory outside of the heap",
+                .caller = __func__ 
+            };
+
+            kpanic(&panicInfo);
+        }
 
         freeBlocks[i + j].free = true;
     }
