@@ -3,30 +3,30 @@
 #include <kernel/kernel.h>
 #include <kernel/kernel_modules/io/kprintf.h>
 #include <kernel/kernel_modules/io/input.h>
-#include "../interrupts/callFrames.h"
-#include "./syscalls.h"
+#include "../interrupts/contexts.h"
+#include <kernel/syscalls/syscalls.h>
 
-void sysOut(const struct syscallFrame* frame)
+void sysOut(const struct syscallRegisters* registers)
 {
-    switch (frame->edx)
+    switch (registers->edx)
     {
         case CLEAR_SCREEN:
             // ebx: color
-            clearScreen((vgaColor_t)frame->ebx);
+            clearScreen((vgaColor_t)registers->ebx);
             break;
         
         case PRINTF:
             /* ebx: format 
                ecx: the arg list */
-            vkprintf((const char*)frame->ebx, frame->ecx.argList);
+            vkprintf((const char*)registers->ebx, registers->ecx.argList);
             break;
         
         case CHANGE_FG_COLOR:
-            setFgColor((vgaColor_t)frame->ebx);
+            setFgColor((vgaColor_t)registers->ebx);
             break;
         
         case CHANGE_BG_COLOR:
-            setBgColor((vgaColor_t)frame->ebx);
+            setBgColor((vgaColor_t)registers->ebx);
             break;
 
         case CURSOR_DISABLE:
@@ -37,13 +37,13 @@ void sysOut(const struct syscallFrame* frame)
             // Control the thickness i suppose
             /* ebx: cursorStart
                ecx: cursorEnd */
-            enableCursor((uint8_t)frame->ebx, (uint8_t)frame->ecx.value);
+            enableCursor((uint8_t)registers->ebx, (uint8_t)registers->ecx.value);
             break;
 
         case CURSOR_UPDATE:
             /* ebx: x 
                ecx: y */
-            updateCursor((uint8_t)frame->ebx, (uint8_t)frame->ecx.value);
+            updateCursor((uint8_t)registers->ebx, (uint8_t)registers->ecx.value);
             break;
         
         default:
@@ -54,9 +54,9 @@ void sysOut(const struct syscallFrame* frame)
 
 // int32_t generalizes the values that could be returned which is why it's used here
 // And because anything to do with syscalls should be using 4 bytes, it's perfect
-int32_t sysIn(const struct syscallFrame* frame)
+int32_t sysIn(const struct syscallRegisters* registers)
 {
-    switch (frame->edx)
+    switch (registers->edx)
     {
         case GET_KEY_CHAR:
         {

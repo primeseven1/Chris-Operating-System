@@ -2,7 +2,7 @@
 #include <libc/string.h>
 #include <stdbool.h>
 #include <stddef.h>
-#include "../../src/kernel/syscalls/syscalls.h"
+#include <kernel/syscalls/syscalls.h>
 
 char* itoa(int value, char* destination, unsigned int base) 
 {

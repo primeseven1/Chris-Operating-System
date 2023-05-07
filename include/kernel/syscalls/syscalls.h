@@ -25,18 +25,17 @@ enum edxSyscallValues
     // SYS_MALLOC and SYS_FREE do not use edx
 };
 
-// The stdlib.h and stdio.h will be including this file, which is why this gaurd is around here
 #ifdef RING0
 
 #include <stdint.h>
-#include "../interrupts/callFrames.h"
+#include "../../../src/kernel/interrupts/contexts.h"
 
 #define NUM_OF_SYSCALLS 4
 
-void sysOut(const struct syscallFrame* frame);
-int32_t sysIn(const struct syscallFrame* frame);
-void* sysMalloc(const struct syscallFrame* frame);
-void sysFree(const struct syscallFrame* frame);
+void sysOut(const struct syscallRegisters* registers);
+int32_t sysIn(const struct syscallRegisters* registers);
+void* sysMalloc(const struct syscallRegisters* registers);
+void sysFree(const struct syscallRegisters* registers);
 
 void badSyscall(const char* caller);
 

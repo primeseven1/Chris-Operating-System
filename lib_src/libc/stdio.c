@@ -1,7 +1,7 @@
 #include <stdint.h>
 #include <libc/stdio.h>
 #include <stdarg.h>
-#include "../../src/kernel/syscalls/syscalls.h"
+#include <kernel/syscalls/syscalls.h>
 
 /* eax: The system call type, but is also used for return values after the system call
    ebx: parameter 1

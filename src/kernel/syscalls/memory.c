@@ -1,15 +1,15 @@
-#include "./syscalls.h"
+#include <kernel/syscalls/syscalls.h>
 #include <kernel/kernel_modules/memory/heap.h>
 
-void* sysMalloc(const struct syscallFrame* frame)
+void* sysMalloc(const struct syscallRegisters* registers)
 {
     // ebx is the block size
-    void* ptr = kmalloc((size_t)frame->ebx);
+    void* ptr = kmalloc((size_t)registers->ebx);
     return ptr;
 }
 
-void sysFree(const struct syscallFrame* frame)
+void sysFree(const struct syscallRegisters* registers)
 {
     // ebx is the pointer that needs to be freed
-    kfree((void*)frame->ebx);
+    kfree((void*)registers->ebx);
 }

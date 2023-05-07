@@ -3,17 +3,18 @@
 #include <stdint.h>
 #include <stdarg.h>
 
-// This frame is automatically pushed onto the stack by the CPU
-struct exceptionCallFrame 
+// Automatically pushed onto the stack by the CPU
+struct exceptionContext
 {
     uint32_t eip;
     uint32_t cs;
     uint32_t eflags;
-    uint32_t errorCode;
+    uint32_t esp; 
+    uint32_t ss;
 } __attribute__((packed));
 
-// This frame gets pushed onto the stack by the syscall handler in ./trap_gates/syscall_handle.asm
-struct syscallFrame
+// This gets pushed onto the stack by the syscall handler in ./trap_gates/syscall_handle.asm
+struct syscallRegisters
 {
     uint32_t eax;
     uint32_t ebx;

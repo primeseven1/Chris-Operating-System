@@ -2,7 +2,7 @@
 #include <kernel/kernel.h>
 #include "../functions.h"
 
-void __attribute__((HW_INTERRUPT)) mce(const struct exceptionCallFrame* frame)
+void __attribute__((HW_INTERRUPT)) mce(const struct exceptionContext* context)
 {
     cli();
 
@@ -10,7 +10,7 @@ void __attribute__((HW_INTERRUPT)) mce(const struct exceptionCallFrame* frame)
         .errorCode = CPU_EXCEPTION,
         .info = "A machine check exception occurred",
         .caller = __func__,
-        .memoryAddress = (void*)frame->eip
+        .memoryAddress = (void*)context->eip
     };
 
     kpanic(&info);

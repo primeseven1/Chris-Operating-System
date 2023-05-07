@@ -1,33 +1,32 @@
 #include <kernel/kernel.h>
-#include "../callFrames.h"
+#include "../contexts.h"
 #include "../functions.h"
-#include "../../syscalls/syscalls.h"
+#include <kernel/syscalls/syscalls.h>
 
-anyType_t __attribute__((ASM_LINKAGE)) check_syscall(const struct syscallFrame frame)
+anyType_t __attribute__((ASM_LINKAGE)) check_syscall(const struct syscallRegisters registers)
 {
-    // eax will hold return values, since it's an anytype return type (anytype is just a typedef for void)
-    switch (frame.eax)
+    switch (registers.eax)
     {
         case SYS_OUT:
-            sysOut(&frame);
+            sysOut(&registers);
             break;
 
         case SYS_IN:
         {
-            uint32_t value = sysIn(&frame);
+            uint32_t value = sysIn(&registers);
             asm volatile("mov %0, %%eax" : : "m"(value));
             break;
         }
 
         case SYS_MALLOC:
         {
-            void* ptr = sysMalloc(&frame); 
+            void* ptr = sysMalloc(&registers); 
             asm volatile("mov %0, %%eax" : : "m"(ptr));
             break;
         }
 
         case SYS_FREE:
-            sysFree(&frame);
+            sysFree(&registers);
             break;
 
         default:
