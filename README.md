@@ -1,3 +1,5 @@
+*** NOTE: I am currently rewriting this at the moment ***
+
 # Chris-Operating-System
 A not very functional OS at the moment
 
